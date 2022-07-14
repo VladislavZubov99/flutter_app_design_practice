@@ -43,18 +43,22 @@ class CircleSVGIconButtonWidget extends StatelessWidget {
             child: SvgPicture.asset(
               configuration.iconAsset,
               color: configuration.iconColor,
+              height: configuration.size / 2,
             ),
           ),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: configuration.callback,
-              borderRadius: BorderRadius.circular(borderRadius),
-              child: Container(
-                width: configuration.size,
-                height: configuration.size,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
+          Align(
+            alignment: Alignment.center,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: configuration.callback,
+                borderRadius: BorderRadius.circular(borderRadius),
+                child: Container(
+                  width: configuration.size,
+                  height: configuration.size,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
                 ),
               ),
             ),
