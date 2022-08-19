@@ -4,8 +4,8 @@ Scaling for mobile
 
 ## Some Screenshots
 <div>
-<img src="https://drive.google.com/uc?export=view&id=1A4XFb5GJnXwQwAuqkAaPFXBh1cxzlicI" alt="Main Page" width="200"/>
-<img src="https://drive.google.com/uc?export=view&id=12CrbPIm_XT7tm_gKjbDaeUagls88rk6X" alt="List of Shoes" width="200"/>
+<img src="https://drive.google.com/uc?export=view&id=1A4XFb5GJnXwQwAuqkAaPFXBh1cxzlicI" alt="Main Page" width="300"/>
+<img src="https://drive.google.com/uc?export=view&id=12CrbPIm_XT7tm_gKjbDaeUagls88rk6X" alt="List of Shoes" width="300"/>
 </div>
 
 ## Getting Started
