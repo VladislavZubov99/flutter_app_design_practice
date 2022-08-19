@@ -1,3 +1,4 @@
+import 'package:app/application/ui/themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -6,6 +7,7 @@ class SVGButtonConfiguration {
   final double size;
   final Color iconColor;
   final Color bgColor;
+  final double radius;
 
   final void Function() callback;
 
@@ -13,17 +15,26 @@ class SVGButtonConfiguration {
     required this.iconAsset,
     required this.size,
     required this.callback,
-    this.iconColor = Colors.red,
+    this.iconColor = AppColors.primary,
     this.bgColor = Colors.white,
+    this.radius = 0.0,
   });
 }
 
-class CircleSVGIconButtonWidget extends StatelessWidget {
+class SVGIconButtonWidget extends StatelessWidget {
   final SVGButtonConfiguration configuration;
+  final bool isCircle;
 
-  const CircleSVGIconButtonWidget({
+  const SVGIconButtonWidget({
     Key? key,
     required this.configuration,
+    this.isCircle = false,
+  }) : super(key: key);
+
+  const SVGIconButtonWidget.circle({
+    Key? key,
+    required this.configuration,
+    this.isCircle = true,
   }) : super(key: key);
 
   @override
@@ -34,8 +45,11 @@ class CircleSVGIconButtonWidget extends StatelessWidget {
       height: configuration.size,
       width: configuration.size,
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(borderRadius)),
+        color: configuration.bgColor,
+        borderRadius: BorderRadius.circular(
+          isCircle ? borderRadius : configuration.radius,
+        ),
+      ),
       child: Stack(
         children: [
           Align(
@@ -52,7 +66,9 @@ class CircleSVGIconButtonWidget extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: configuration.callback,
-                borderRadius: BorderRadius.circular(borderRadius),
+                borderRadius: BorderRadius.circular(
+                  isCircle ? borderRadius : configuration.radius,
+                ),
                 child: Container(
                   width: configuration.size,
                   height: configuration.size,

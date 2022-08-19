@@ -1,86 +1,75 @@
+import 'dart:ui';
+
+import 'package:app/application/ui/my_app/app_settings.dart';
 import 'package:app/application/ui/themes/app_colors.dart';
-import 'package:app/application/ui/widgets/circle_avatar_icon_button_widget.dart';
-import 'package:app/application/ui/widgets/circle_svg_icon_button_widget.dart';
-import 'package:app/application/ui/widgets/search_textfield_widget.dart';
-import 'package:app/resources/resources.dart';
+import 'package:app/application/ui/widgets/carousel_widget.dart';
+import 'package:app/application/ui/widgets/header_widget/main_header_widget.dart';
+import 'package:app/application/ui/widgets/product_cards_widget/product_card_list.dart';
+import 'package:app/application/ui/widgets/tiles_widget/tile_list_widget.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatelessWidget {
+import 'package:relative_scale/relative_scale.dart';
+
+class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
-  final double _circleSize = 40;
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            SafeArea(
-              top: true,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CircleSVGIconButtonWidget(
-                    configuration: getMenuButtonConfiguration(),
-                  ),
-                  const Expanded(child: SizedBox()),
-                  const Text(
-                    'Home',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Expanded(child: SizedBox()),
-                  CircleSVGIconButtonWidget(
-                    configuration: getShoppingBagButtonConfiguration(),
-                  ),
-                  const SizedBox(width: 10),
-                  CircleAvatarButtonWidget(
-                    configuration: getAvatarButtonConfiguration(),
-                  ),
-                ],
+    return RelativeBuilder(builder: (context, height, width, sy, sx) {
+      return SafeArea(
+        top: true,
+        child: Scaffold(
+          backgroundColor: AppColors.background,
+          body: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverPersistentHeader(
+                pinned: true,
+                floating: true,
+                delegate: HeaderDelegate(
+                  child: PreferredSize(
+                      preferredSize: Size.fromHeight(sx(180)),
+                      child: const HeaderWidget()),
+                ),
               ),
-            ),
-            Row(
-              children: const [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: SearchTextFieldWidget(),
+              const SliverToBoxAdapter(
+                child: CarouselWidget(),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppSettings.padding,
+                    vertical: AppSettings.padding,
                   ),
-                )
-              ],
-            )
-          ],
+                  child: const TileListWidget(),
+                ),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.all(
+                  AppSettings.padding,
+                ),
+                sliver: SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 20,
+                      // childAspectRatio: 0.8,
+                      mainAxisExtent: sx(320)),
+                  delegate:ProductCardListSliverDelegate(),
+
+
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
-
-  SVGButtonConfiguration getMenuButtonConfiguration() {
-    return SVGButtonConfiguration(
-      iconAsset: AppSvgs.apps2Fill,
-      size: _circleSize,
-      callback: () {},
-    );
-  }
-
-  ImageButtonConfiguration getAvatarButtonConfiguration() {
-    return ImageButtonConfiguration(
-      size: _circleSize,
-      imageAsset: AppImages.avatar2,
-      callback: () {},
-    );
-  }
-
-  SVGButtonConfiguration getShoppingBagButtonConfiguration() {
-    return SVGButtonConfiguration(
-      size: _circleSize,
-      iconAsset: AppSvgs.bagFill,
-      callback: () {},
-    );
+      );
+    });
   }
 }

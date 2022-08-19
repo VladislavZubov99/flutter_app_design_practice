@@ -9,4 +9,5 @@ class AppSvgs {
   static const String gridFill = 'assets/vectors/grid-fill.svg';
   static const String listSettings = 'assets/vectors/list-settings.svg';
   static const String search = 'assets/vectors/search.svg';
+  static const String starFill = 'assets/vectors/star-fill.svg';
 }
